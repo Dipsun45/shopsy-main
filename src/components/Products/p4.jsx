@@ -1,0 +1,262 @@
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+
+export default function ProductDetail4() {
+  const { id } = useParams();
+
+  const [quantity, setQuantity] = useState(1);
+  const [activeTab, setActiveTab] = useState("description");
+
+  const [showPopup, setShowPopup] = useState(false);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    address: "",
+  });
+
+  const [submittedData, setSubmittedData] = useState(null);
+
+  useEffect(() => {
+    if (submittedData) {
+      const timer = setTimeout(() => {
+        setSubmittedData(null);
+      }, 15000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [submittedData]);
+
+  const products = {
+    1: {
+      name: "SAMSUNG Gear S3 Frontier Smartwatch",
+      price: 45000,
+      oldPrice: 55000,
+      rating: 4.4,
+      images: [
+        "https://image-us.samsung.com/SamsungUS/home/mobile/wearables/pdp/sm-r760ndaaxar/gallery/S3_Frontier_Front_1600x1200.jpg?$product-details-jpg$"
+      ],
+      description:
+        "The Samsung Gear S3 Frontier is a premium rugged smartwatch designed for fitness tracking, calls, notifications, and outdoor activities.",
+      specs: [
+        "1.3-inch Super AMOLED display",
+        "Resolution: 360 × 360 pixels",
+        "Always-On Display",
+        "Protected by Gorilla Glass SR+"
+      ],
+    },
+  };
+
+  const product = products[id] || products[1];
+  const [mainImage, setMainImage] = useState(product.images[0]);
+
+  useEffect(() => {
+    setMainImage(product.images[0]);
+  }, [id]);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmittedData(formData);
+    setShowPopup(false);
+
+    setFormData({
+      name: "",
+      email: "",
+      address: "",
+    });
+  };
+
+  return (
+    <div className="bg-gray-50 dark:bg-gray-900 min-h-screen pt-28 pb-16 px-4 text-black dark:text-white">
+
+      <div className="max-w-6xl mx-auto">
+
+        {/* PRODUCT SECTION */}
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 grid md:grid-cols-2 gap-10 items-center">
+
+          <div className="flex justify-center">
+            <img
+              src={mainImage}
+              className="w-full max-w-[400px] rounded-xl object-contain"
+              alt="product"
+            />
+          </div>
+
+          <div>
+            <h1 className="text-3xl font-bold mb-3">
+              {product.name}
+            </h1>
+
+            <div className="flex items-center gap-3 mb-4">
+              <span className="text-xl font-semibold text-orange-500">
+                ₹{product.price}
+              </span>
+              <span className="line-through text-gray-400">
+                ₹{product.oldPrice}
+              </span>
+              <span className="text-yellow-500">
+                ⭐ {product.rating}
+              </span>
+            </div>
+
+            <p className="text-gray-600 dark:text-gray-300 mb-6">
+              {product.description}
+            </p>
+
+            {/* Quantity */}
+            <div className="flex items-center gap-4 mb-6">
+              <button
+                onClick={() => setQuantity(q => Math.max(1, q - 1))}
+                className="px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded"
+              >
+                -
+              </button>
+              <span>{quantity}</span>
+              <button
+                onClick={() => setQuantity(q => q + 1)}
+                className="px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded"
+              >
+                +
+              </button>
+            </div>
+
+            {/* Buttons */}
+            <div className="flex gap-4">
+              <button className="bg-orange-500 text-white px-6 py-3 rounded-xl hover:bg-orange-600">
+                Add to Cart
+              </button>
+
+              <button
+                onClick={() => setShowPopup(true)}
+                className="border border-orange-500 text-orange-500 px-6 py-3 rounded-xl hover:bg-orange-50 dark:hover:bg-gray-700"
+              >
+                Order Now
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* TABS */}
+        <div className="mt-12 bg-white dark:bg-gray-800 rounded-2xl shadow p-6">
+          <div className="flex gap-6 border-b mb-4">
+            {["description", "specs", "reviews"].map(tab => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`pb-2 capitalize ${
+                  activeTab === tab
+                    ? "border-b-2 border-orange-500 text-orange-500"
+                    : "text-gray-500"
+                }`}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+
+          {activeTab === "description" && (
+            <p className="text-gray-600 dark:text-gray-300">
+              {product.description}
+            </p>
+          )}
+
+          {activeTab === "specs" && (
+            <ul className="list-disc ml-6 text-gray-600 dark:text-gray-300">
+              {product.specs.map((spec, i) => (
+                <li key={i}>{spec}</li>
+              ))}
+            </ul>
+          )}
+
+          {activeTab === "reviews" && (
+            <p className="text-gray-500">No reviews yet.</p>
+          )}
+        </div>
+
+        {/* ORDER DETAILS */}
+        {submittedData && (
+          <div className="mt-10 p-5 border rounded bg-green-100 dark:bg-green-900">
+            <h2 className="text-xl font-bold mb-2">Order Details</h2>
+            <p><strong>Name:</strong> {submittedData.name}</p>
+            <p><strong>Email:</strong> {submittedData.email}</p>
+            <p><strong>Address:</strong> {submittedData.address}</p>
+            <p><strong>Product:</strong> {product.name}</p>
+          </div>
+        )}
+      </div>
+
+      {/* 🔥 BACKGROUND BLUR LAYER */}
+      {showPopup && (
+        <div className="fixed inset-0 backdrop-blur-sm bg-black/30 z-40"></div>
+      )}
+
+      {/* 🔥 POPUP (NOT BLURRED) */}
+      {showPopup && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+
+          <div className="bg-white p-6 rounded-xl w-[90%] max-w-sm shadow-xl text-black">
+
+            <h2 className="text-xl font-bold mb-4 text-center">
+              Order Form
+            </h2>
+
+            <form onSubmit={handleSubmit} className="space-y-3">
+
+              <input
+                type="text"
+                name="name"
+                placeholder="Your Name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full border p-2 rounded"
+                required
+              />
+
+              <input
+                type="email"
+                name="email"
+                placeholder="Your Email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full border p-2 rounded"
+                required
+              />
+
+              <textarea
+                name="address"
+                placeholder="Your Address"
+                value={formData.address}
+                onChange={handleChange}
+                className="w-full border p-2 rounded"
+                required
+              />
+
+              <button
+                type="submit"
+                className="bg-orange-500 text-white w-full py-2 rounded"
+              >
+                Submit Order
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setShowPopup(false)}
+                className="w-full mt-2 text-red-500"
+              >
+                Cancel
+              </button>
+
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
