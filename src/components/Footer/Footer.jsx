@@ -28,11 +28,11 @@ const FooterLinks = [
     link: "/#about",
   },
   {
-    title: "Contact",
-    link: "/#contact",
+    title: "Products",
+    link: "/#",
   },
   {
-    title: "Blog",
+    title: "News",
     link: "/#blog",
   },
 ];
@@ -49,8 +49,7 @@ const Footer = () => {
               Shopsy
             </h1>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum in
-              beatae ea recusandae blanditiis veritatis.
+            It's a trustable and phenomenal unique brand products platform so buy and enjoy.
             </p>
           </div>
 
@@ -108,11 +107,11 @@ const Footer = () => {
               <div className="mt-6">
                 <div className="flex items-center gap-3">
                   <FaLocationArrow />
-                  <p>Noida, Uttar Pradesh</p>
+                  <p>INDIA</p>
                 </div>
                 <div className="flex items-center gap-3 mt-3">
                   <FaMobileAlt />
-                  <p>+91 123456789</p>
+                  <p>+91 7854159876</p>
                 </div>
               </div>
             </div>
