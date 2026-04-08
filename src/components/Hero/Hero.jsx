@@ -1,30 +1,30 @@
 import React from "react";
-import Image1 from "../../assets/hero/women.png";
-import Image2 from "../../assets/hero/shopping.png";
-import Image3 from "../../assets/hero/sale.png";
+import Image1 from "../../assets/hero/p3.png";
+import Image2 from "../../assets/hero/p4.png";
+import Image3 from "../../assets/hero/image.png";
 import Slider from "react-slick";
 
 const ImageList = [
   {
     id: 1,
     img: Image1,
-    title: "Upto 50% off on all Men's Wear",
+    title: "⚡ Flat 30% OFF on Latest Gadgets!",
     description:
-      "lorem His Life will forever be Changed dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "Get a straight 30% discount on newly released tech products without any conditions. It encourages users to buy trending gadgets at a lower price instantly.",
   },
   {
     id: 2,
     img: Image2,
-    title: "30% off on all Women's Wear",
+    title: "🔥 Big Deals on Electronics – Limited Time Only",
     description:
-      "Who's there lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "Highlights special offers across multiple electronic categories but for a short period. Creates urgency so customers don’t miss out on the deals.",
   },
   {
     id: 3,
     img: Image3,
-    title: "70% off on all Products Sale",
+    title: "💥 Upgrade Your Tech & Save More Today",
     description:
-      "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "Motivates users to replace old devices with newer ones while saving money. Focuses on both improvement (upgrade) and value (discount).",
   },
 ];
 
@@ -48,6 +48,8 @@ const Hero = ({ handleOrderPopup }) => {
       <div className="h-[700px] w-[700px] bg-primary/40 absolute -top-1/2 right-0 rounded-3xl rotate-45 -z[8]"></div>
       {/* hero section */}
       <div className="container pb-8 sm:pb-0">
+           <div
+      id="home" ></div>
         <Slider {...settings}>
           {ImageList.map((data) => (
             <div>
